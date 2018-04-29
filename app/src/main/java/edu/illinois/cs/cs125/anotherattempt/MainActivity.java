@@ -54,6 +54,8 @@ import java.io.InputStream;
 import edu.illinois.cs.cs125.anotherattempt.Main2Activity;
 import edu.illinois.cs.cs125.anotherattempt.R;
 
+import static com.google.cloud.vision.v1.ImageAnnotatorClient.*;
+
 
 /**
  * Main class for our UI design lab.
@@ -121,18 +123,18 @@ public final class MainActivity extends AppCompatActivity {
 
     /**
      * Make a call to the API.
-     * @TargetApi(26) s.
+     *
      */
     void startAPICall() {
 
-      //  try  {
+        try {
             Log.d(TAG, "startAPICall has started at try");
-           // ImageAnnotatorClient vision = ImageAnnotatorClient.create();
-     /**       String fileName = getPath(selectedPhotoURI);
+            ImageAnnotatorClient vision = create();
+            String fileName = getPath(selectedPhotoURI);
             byte[] data;
             ByteString imgBytes = null;
 
-            if (Build.VERSION.SDK_INT >= 26 ) {
+            if (Build.VERSION.SDK_INT >= 26) {
                 Path path = Paths.get(fileName);
                 data = Files.readAllBytes(path);
                 imgBytes = ByteString.copyFrom(data);
@@ -160,15 +162,16 @@ public final class MainActivity extends AppCompatActivity {
                     return;
                 }
 
-              //  for (EntityAnnotation annotation : res.getLabelAnnotationsList()) {
-              //      if (Build.VERSION.SDK_INT > 26 ) {
-              //          annotation.getAllFields().forEach((k, v);
-               //     }
-               // }
-           **/
-          //  } catch (IOException e1) {
-        //    e1.printStackTrace();
-     //   }
+                //  for (EntityAnnotation annotation : res.getLabelAnnotationsList()) {
+               //      if (Build.VERSION.SDK_INT > 26 ) {
+               //           annotation.getAllFields().forEach((k, v);
+               //      }
+               //  }
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         /**
          try {
@@ -195,7 +198,7 @@ public final class MainActivity extends AppCompatActivity {
          e.printStackTrace();
          }
          **/
-        }
+    }
     void startOpenImage() {
         if(Build.VERSION.SDK_INT < 19) return;
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
