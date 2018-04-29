@@ -79,7 +79,7 @@ public final class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         // Set up the queue for our API requests
-        requestQueue = Volley.newRequestQueue(this);
+       // requestQueue = Volley.newRequestQueue(this);
         setContentView(R.layout.activity_main);
         final ImageButton openImage = findViewById(R.id.openFile);
         openImage.setOnClickListener(new View.OnClickListener() {
@@ -96,9 +96,11 @@ public final class MainActivity extends AppCompatActivity {
             public void onClick(final View v) {
                 Log.d(TAG, "Start API button clicked");
                 startAPICall();
-                String json = requestQueue.getCache().toString();
+                Log.d(TAG, "startAPICall Finished");
+               // if ()
+               // String json = requestQueue.getCache().toString();
                 System.out.println("IS IT WORKING BUBBLES");
-                System.out.println(json);
+                //System.out.println(json);
                 Intent intent = new Intent(MainActivity.this, Main2Activity.class);
                 startActivity(intent);
 
@@ -123,16 +125,19 @@ public final class MainActivity extends AppCompatActivity {
      */
     void startAPICall() {
 
-        try  {
-            ImageAnnotatorClient vision = ImageAnnotatorClient.create();
-            String fileName = getPath(selectedPhotoURI);
+      //  try  {
+            Log.d(TAG, "startAPICall has started at try");
+           // ImageAnnotatorClient vision = ImageAnnotatorClient.create();
+     /**       String fileName = getPath(selectedPhotoURI);
             byte[] data;
             ByteString imgBytes = null;
 
-            if (Build.VERSION.SDK_INT > 26 ) {
+            if (Build.VERSION.SDK_INT >= 26 ) {
                 Path path = Paths.get(fileName);
                 data = Files.readAllBytes(path);
                 imgBytes = ByteString.copyFrom(data);
+            } else {
+                Log.d(TAG, "SDK VERSION IS BELOW 26");
             }
 
             // Builds the image annotation request
@@ -160,11 +165,11 @@ public final class MainActivity extends AppCompatActivity {
               //          annotation.getAllFields().forEach((k, v);
                //     }
                // }
-            }
-        } catch (IOException e) {
-            Log.d(TAG, "startAPICall: Exception has occured", e);
-            return;
-        }
+           **/
+          //  } catch (IOException e1) {
+        //    e1.printStackTrace();
+     //   }
+
         /**
          try {
          JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
@@ -190,7 +195,7 @@ public final class MainActivity extends AppCompatActivity {
          e.printStackTrace();
          }
          **/
-    }
+        }
     void startOpenImage() {
         if(Build.VERSION.SDK_INT < 19) return;
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
