@@ -115,9 +115,9 @@ public class Task1 extends AsyncTask<String, Void, String>  {
                 toReturn += line;
 
             }
-            System.out.println("*************JSON FOUND SUCCESSFULL***************************");
-            System.out.println("");
-            System.out.println("**************************************************");
+          //  System.out.println("*************JSON FOUND SUCCESSFULL***************************");
+          //  System.out.println("");
+          //  System.out.println("**************************************************");
         } else {
             System.out.println("Scanner  is null ");
         }
