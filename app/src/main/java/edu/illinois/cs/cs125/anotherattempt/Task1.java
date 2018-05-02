@@ -96,36 +96,25 @@ public class Task1 extends AsyncTask<String, Void, String>  {
         }
 
         httpConnection.setRequestProperty("Content-Type", "application/json");
-
         httpConnection.setDoOutput(true);
-
         BufferedWriter httpRequestBodyWriter = null;
 
         try {
 
             Log.d(TAG, "request in try before");
-
             httpRequestBodyWriter = new BufferedWriter(new OutputStreamWriter(httpConnection.getOutputStream()));
-
             Log.d(TAG, "stream writer in try");
 
         } catch (IOException e) {
-
             Log.d(TAG, "outputstreamwriter try/catch");
-
             e.printStackTrace();
 
         }
 
-        //https://www.nationalgeographic.com/content/dam/animals/thumbs/rights-exempt/birds/b/bald-eagle_thumb.JPG
-
-        //https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png
-
         try {
-           // System.out.println(MainActivity.imageAsString);
-          //  System.out.println("TESTTEEST");
+
             httpRequestBodyWriter.write
- //("{\"requests\":  [{\"image\":  {\"content\":  " + MainActivity.imageAsString + "},\"features\":  [{\"type\":  \"LABEL_DETECTION\",\"maxResults\":  1 }]}]}");
+
              ("{\"requests\":  [{ \"features\":  [ {\"type\": \"LABEL_DETECTION\""
                           +"}], \"image\": {\"content\":"
                         + "\"" +  MainActivity.imageAsString + "\"}}]}");
@@ -134,23 +123,14 @@ public class Task1 extends AsyncTask<String, Void, String>  {
                 //           +" \"https://www.nationalgeographic.com/content/dam/animals/thumbs/rights-exempt/birds/b/bald-eagle_thumb.JPG\"}}}]}");
 
         } catch (IOException e) {
-
             Log.d(TAG, "body writer try/catch");
-
             e.printStackTrace();
-
         }
-
         try {
-
             httpRequestBodyWriter.close();
-
         } catch (IOException e) {
-
             Log.d(TAG, "body writer close try/catch");
-
             e.printStackTrace();
-
         }
 
         try {

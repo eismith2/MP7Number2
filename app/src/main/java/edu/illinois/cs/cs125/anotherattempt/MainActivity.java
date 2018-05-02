@@ -62,7 +62,6 @@ public final class MainActivity extends AppCompatActivity {
     public static Bitmap image = null;
 
 
-
     /**
      * Run when this activity comes to the foreground.
      * @param savedInstanceState unused
@@ -81,9 +80,7 @@ public final class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.d(TAG, "Open image button");
                 startOpenImage();
-
             }
-
         });
 
         final Button startAPICall = findViewById(R.id.getBirdInfo);
@@ -96,62 +93,39 @@ public final class MainActivity extends AppCompatActivity {
                 try {
                     bitmapToBase64(image);
                     birdResults = startAPICall();
-
                 } catch (IOException e) {
-
                     Log.d(TAG, "StartAPI call failed");
-
                     e.printStackTrace();
-
                 } catch (InterruptedException e) {
-
                     e.printStackTrace();
-
                 } catch (ExecutionException e) {
-
                     e.printStackTrace();
-
                 }
 
                 Log.d(TAG, "startAPICall Finished");
-
                 Intent intent = new Intent(MainActivity.this, Main2Activity.class);
-
                 startActivity(intent);
             }
-
         });
-
     }
 
     /**
      * Run when this activity is no longer visible.
      */
-
     @Override
     protected void onPause() {
         super.onPause();
     }
 
-
-
     @Override
     protected void onRestart() {
-
         super.onRestart();
-
         Log.i(TAG, "On Restart .....");
-
     }
 
-
-
     /**
-
      * Make a call to the API.
-
      */
-
     String startAPICall() throws IOException, ExecutionException, InterruptedException {
 
         String output =  new Task1().execute().get();
@@ -161,10 +135,7 @@ public final class MainActivity extends AppCompatActivity {
             Log.d(TAG, "null json return");
         }
         JsonObject object = parser.parse(output).getAsJsonObject();
-        System.out.println(isJSONValid(output));
-
-//labelAnnotations
-
+       // System.out.println(isJSONValid(output));
         JsonArray responses = object.getAsJsonArray("responses");
         JsonObject labelAnnotations = responses.get(0).getAsJsonObject();
        JsonArray first = labelAnnotations.get("labelAnnotations").getAsJsonArray();
@@ -184,7 +155,6 @@ public final class MainActivity extends AppCompatActivity {
 
     }
 
-
     void startOpenImage() {
         if(Build.VERSION.SDK_INT < 19) return;
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
@@ -194,81 +164,48 @@ public final class MainActivity extends AppCompatActivity {
     }
 
     public void onActivityResult(final int requestCode, final int resultCode, Intent resultData) {
-
         if (resultCode == RESULT_OK) {
-
             selectedPhotoURI = resultData.getData();
-
             loadSelectedPhoto(selectedPhotoURI);
-
         }
-
     }
 
     public String getPath(Uri currentUri) {
-
         String[] proj = {MediaStore.Images.Media.DATA};
-
         Cursor cursor = managedQuery(currentUri, proj,null, null, null);
-
         int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-
         cursor.moveToFirst();
-
         return cursor.getString(column_index);
 
     }
 
     public void loadSelectedPhoto (final Uri selectedPhotoUri) {
-
         if (selectedPhotoUri == null) {
-
             return;
-
         }
-
-
-
         try {
-
             InputStream inputStream = getContentResolver().openInputStream(selectedPhotoUri);
-
             final ImageView imageViewer = findViewById(R.id.imageView);
-
             int targetWidth = imageViewer.getWidth();
-
             int targetHeight = imageViewer.getHeight();
-
             image = BitmapFactory.decodeStream(inputStream);
-
             imageViewer.setImageBitmap(image);
-
         } catch (FileNotFoundException e) {
-
             e.printStackTrace();
-
             Toast.makeText(this, "Unable to load image", Toast.LENGTH_LONG).show();
-
         }
-
-
-
     }
 
+    /**
+     * used to validate if Json was accurate. not really used in code
+     */
     private static final Gson gson = new Gson();
 
-
-
     public static boolean isJSONValid(String jsonInString) {
-
         try {
-
             gson.fromJson(jsonInString, Object.class);
-
             return true;
-
         } catch(com.google.gson.JsonSyntaxException ex) {
-
             return false;
 
         }
