@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -34,6 +35,7 @@ import com.google.gson.JsonElement;
 import com.google.protobuf.ByteString;
 
 import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.lang.annotation.Target;
@@ -95,6 +97,10 @@ public final class MainActivity extends AppCompatActivity {
 
     public static String birdResults = "";
 
+    public Bitmap image = null;
+
+    public static String imageAsString = "";
+
     /**
      * Run when this activity comes to the foreground.
      *
@@ -120,6 +126,8 @@ public final class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(final View v) {
                 Log.d(TAG, "Start API button clicked");
+                //put in try/catch for NullPointerException??
+                bitmapToBase64(image);
                 try {
                    birdResults = startAPICall();
                 } catch (IOException e) {
@@ -170,6 +178,7 @@ public final class MainActivity extends AppCompatActivity {
      * Make a call to the API.
      */
     String startAPICall() throws IOException, ExecutionException, InterruptedException {
+        System.out.println("hey");
         String output =  new Task1().execute().get();
         System.out.println(output);
             JsonParser parser = new JsonParser();
@@ -195,7 +204,7 @@ public final class MainActivity extends AppCompatActivity {
        return results;
            }
 
-           
+
 
     void startOpenImage() {
         if(Build.VERSION.SDK_INT < 19) return;
@@ -227,7 +236,7 @@ public final class MainActivity extends AppCompatActivity {
             final ImageView imageViewer = findViewById(R.id.imageView);
             int targetWidth = imageViewer.getWidth();
             int targetHeight = imageViewer.getHeight();
-            Bitmap image = BitmapFactory.decodeStream(inputStream);
+            image = BitmapFactory.decodeStream(inputStream);
             imageViewer.setImageBitmap(image);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -235,6 +244,22 @@ public final class MainActivity extends AppCompatActivity {
         }
 
     }
+    private String bitmapToBase64(Bitmap image) {
+        System.out.println("hi");
+        if (image == null) {
+            Log.d(TAG, "Please download an image of your bird");
+            return null;
+        }
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        byte[] byteArray = byteArrayOutputStream .toByteArray();
+        imageAsString =  Base64.encodeToString(byteArray, Base64.DEFAULT);
+        return imageAsString;
+    }
+    //public static String encodeToString() {
+    //    byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
+    //    Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+    //}
     private static final Gson gson = new Gson();
 
     public static boolean isJSONValid(String jsonInString) {

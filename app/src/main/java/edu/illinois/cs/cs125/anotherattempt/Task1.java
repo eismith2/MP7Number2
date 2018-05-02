@@ -63,10 +63,10 @@ public class Task1 extends AsyncTask<String, Void, String>  {
         //https://www.nationalgeographic.com/content/dam/animals/thumbs/rights-exempt/birds/b/bald-eagle_thumb.JPG
          //https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png
         try {
-            httpRequestBodyWriter.write
-                    ("{\"requests\":  [{ \"features\":  [ {\"type\": \"LABEL_DETECTION\""
-                            +"}], \"image\": {\"source\": { \"imageUri\":"
-                            +" \"https://www.nationalgeographic.com/content/dam/animals/thumbs/rights-exempt/birds/b/bald-eagle_thumb.JPG\"}}}]}");
+            httpRequestBodyWriter.write(MainActivity.imageAsString);
+                    //("{\"requests\":  [{ \"features\":  [ {\"type\": \"LABEL_DETECTION\""
+                    //        +"}], \"image\": {\"source\": { \"imageUri\":"
+                    //        +" \"https://www.nationalgeographic.com/content/dam/animals/thumbs/rights-exempt/birds/b/bald-eagle_thumb.JPG\"}}}]}");
 
 
         } catch (IOException e) {
