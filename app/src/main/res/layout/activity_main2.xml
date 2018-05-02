@@ -71,7 +71,7 @@
         app:layout_constraintVertical_bias="0.746" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/weatherColor"
         android:layout_width="70dp"
         android:layout_height="59dp"
         android:layout_marginBottom="8dp"
@@ -89,7 +89,7 @@
         app:srcCompat="@android:drawable/checkbox_on_background" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/weatherText"
         android:layout_width="348dp"
         android:layout_height="68dp"
         android:layout_marginBottom="28dp"
