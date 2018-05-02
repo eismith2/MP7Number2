@@ -36,6 +36,8 @@ import com.google.protobuf.ByteString;
 
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.lang.annotation.Target;
@@ -127,7 +129,7 @@ public final class MainActivity extends AppCompatActivity {
             public void onClick(final View v) {
                 Log.d(TAG, "Start API button clicked");
                 //put in try/catch for NullPointerException??
-                bitmapToBase64(image);
+                //bitmapToBase64(image);
                 try {
                    birdResults = startAPICall();
                 } catch (IOException e) {
@@ -244,16 +246,17 @@ public final class MainActivity extends AppCompatActivity {
         }
 
     }
-    private String bitmapToBase64(Bitmap image) {
-        System.out.println("hi");
-        if (image == null) {
-            Log.d(TAG, "Please download an image of your bird");
-            return null;
-        }
+
+        private String bitmapToBase64(Bitmap image) {
+       // if (image == null) {
+       //     Log.d(TAG, "Please download an image of your bird");
+       //     return null;
+       // }
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         image.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
         byte[] byteArray = byteArrayOutputStream .toByteArray();
         imageAsString =  Base64.encodeToString(byteArray, Base64.DEFAULT);
+       // System.out.println(imageAsString);
         return imageAsString;
     }
     //public static String encodeToString() {
@@ -270,6 +273,32 @@ public final class MainActivity extends AppCompatActivity {
             return false;
         }
     }
+    /**
+    void secondStartAPICall() {
+        try {
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                    Request.Method.GET,
+                    "http://api.openweathermap.org/data/2.5/weather?zip=61820,us&appid="
+                            + BuildConfig.API_KEY,
+                    null,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(final JSONObject response) {
+                            try {
+                                Log.d(TAG, response.toString(2));
+                            } catch (JSONException ignored) { }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(final VolleyError error) {
+                    Log.e(TAG, error.toString());
+                }
+            });
+            requestQueue.add(jsonObjectRequest);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        **/
+    }
 
 
-}

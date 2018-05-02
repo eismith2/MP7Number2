@@ -4,8 +4,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.android.volley.toolbox.JsonObjectRequest;
-
 import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
@@ -63,12 +63,13 @@ public class Task1 extends AsyncTask<String, Void, String>  {
         //https://www.nationalgeographic.com/content/dam/animals/thumbs/rights-exempt/birds/b/bald-eagle_thumb.JPG
          //https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png
         try {
-            httpRequestBodyWriter.write(MainActivity.imageAsString);
-                    //("{\"requests\":  [{ \"features\":  [ {\"type\": \"LABEL_DETECTION\""
-                    //        +"}], \"image\": {\"source\": { \"imageUri\":"
-                    //        +" \"https://www.nationalgeographic.com/content/dam/animals/thumbs/rights-exempt/birds/b/bald-eagle_thumb.JPG\"}}}]}");
-
-
+            httpRequestBodyWriter.write
+                   // ("{\"requests\":  [{\"image\":  {\"content\":  " + MainActivity.imageAsString + "},\"features\":  [{\"type\":  \"LABEL_DETECTION\",\"maxResults\":  1 }]}]}");
+                   // ("{\"requests\":  [{ \"features\":  [ {\"type\": \"LABEL_DETECTION\""
+                     //       +"}], \"image\":  {\"content\": " + MainActivity.imageAsString + "}}]}");
+                    ("{\"requests\":  [{ \"features\":  [ {\"type\": \"LABEL_DETECTION"
+                                +"}], \"image\": {\"source\": { \"gcsImageUri\":" +
+                             "gs://vision-sample-images/4_Kittens.jpg\"}}}]}");
         } catch (IOException e) {
             Log.d(TAG, "body writer try/catch");
             e.printStackTrace();
@@ -129,5 +130,7 @@ public class Task1 extends AsyncTask<String, Void, String>  {
         Log.d(TAG, "END OF START API BIRD");
         return toReturn;
     }
-}
+
+
+    }
 
