@@ -13,6 +13,13 @@ public class Main2Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         final TextView birdwords = findViewById(R.id.nameResult);
-        birdwords.setText(MainActivity.birdResults);
+        if (MainActivity.birdResults.contains("bird")) {
+
+            birdwords.setText(MainActivity.birdResults);
+        } else {
+            birdwords.setText("Not a bird");
+        }
+
+
     }
 }
